@@ -2,10 +2,12 @@ package com.portfolio.javabackend.config;
 
 import com.portfolio.javabackend.filter.AppAuthenticationFilter;
 import com.portfolio.javabackend.filter.AppAuthorizationFilter;
+import com.portfolio.javabackend.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -37,6 +39,7 @@ public class SecurityConfiguration {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/app/login/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/app/user/getinfo").hasAuthority(Role.USER.name());
         http.authenticationManager(authenticationManager);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new AppAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -24,4 +24,6 @@ public interface AppUserService {
     AppUser findByUsernameOrEmail(String username);
 
     Optional<String> getUserFullName(String username);
+
+    Long getUserId(String username);
 }

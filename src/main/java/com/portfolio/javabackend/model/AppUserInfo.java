@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "app_user_info")
+@Table(name = "app_users_info")
 public class AppUserInfo {
 
     @Id
@@ -21,4 +21,21 @@ public class AppUserInfo {
 
     @Column(name = "phone_number")
     private String phone_number;
+
+    public AppUserInfo(){};
+
+    public AppUserInfo(AppUserInfoCombined appUserInfoCombined){
+        this.address = appUserInfoCombined.getAddress();
+        this.phone_number = appUserInfoCombined.getPhone_number();
+    }
+
+    @Override
+    public String toString() {
+        return "AppUserInfo{" +
+                "user_info_id=" + user_info_id +
+                ", user_id=" + user_id +
+                ", address='" + address + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                '}';
+    }
 }

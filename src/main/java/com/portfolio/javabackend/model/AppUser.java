@@ -36,5 +36,13 @@ public class AppUser {
     @Transient
     private String token;
 
+    public AppUser(){};
+    public AppUser(AppUserInfoCombined appUserInfoCombined){
+        this.name = appUserInfoCombined.getName();
+        this.username = appUserInfoCombined.getUsername();
+        this.password = appUserInfoCombined.getPassword();
+        this.email = appUserInfoCombined.getEmail();
+    }
+
 
 }

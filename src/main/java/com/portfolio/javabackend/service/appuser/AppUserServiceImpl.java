@@ -69,4 +69,9 @@ public class AppUserServiceImpl implements AppUserService{
     public Optional<String> getUserFullName(String username) {
         return Optional.empty();
     }
+
+    @Override
+    public Long getUserId(String username) {
+        return appUserRepository.getUserId(username).orElse(null);
+    }
 }

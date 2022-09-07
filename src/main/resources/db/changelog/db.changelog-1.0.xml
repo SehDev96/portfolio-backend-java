@@ -16,5 +16,17 @@
             DROP TABLE user;
         </rollback>
     </changeSet>
-
+    <changeSet id="2" author="sehran">
+        <sql>
+            CREATE TABLE IF NOT EXISTS app_users_info (
+            user_info_id serial PRIMARY key,
+            user_id int NOT NULL REFERENCES app_users,
+            address VARCHAR ( 255 ) NOT NULL,
+            phone_number VARCHAR(255) NOT NULL
+            );
+        </sql>
+        <rollback>
+            DROP TABLE app_users_info;
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

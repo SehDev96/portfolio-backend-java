@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.javabackend.jwt.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,9 +25,7 @@ import static java.util.Arrays.stream;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 public class AppAuthorizationFilter extends OncePerRequestFilter {
-
-    private JwtUtil jwtUtil;
-
+    private JwtUtil jwtUtil = new JwtUtil();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -49,7 +48,8 @@ public class AppAuthorizationFilter extends OncePerRequestFilter {
                     });
 
                     //TODO Check about passing username and password here
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(new User(username, username, authorities), null);
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(new User(username, username, authorities), null,authorities);
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
