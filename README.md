@@ -1,6 +1,6 @@
 ###Steps to run backend code
 
-$ git clone git@github.com:SehDev96/portfolio-java-backend.git
+$ git clone git@github.com:SehDev96/portfolio-backend-java.git
 
 $ cd docker
 
