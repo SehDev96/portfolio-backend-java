@@ -29,6 +29,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### temp database ###
+/docker/database-data
+
 ### VS Code ###
 .vscode/
 
