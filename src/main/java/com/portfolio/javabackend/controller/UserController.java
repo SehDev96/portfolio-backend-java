@@ -45,9 +45,9 @@ public class UserController {
 
         AppUserInfo appUserInfo = new AppUserInfo(appUserInfoCombined);
 
-        AppUser newAppUser = appUserService.saveUser(appUser);
+        appUser = appUserService.saveUser(appUser);
 
-        appUserInfo.setUser_id(newAppUser.getUser_id());
+        appUserInfo.setUser_id(appUser.getUser_id());
 
         appUserInfoService.saveAppUserInfo(appUserInfo);
 
