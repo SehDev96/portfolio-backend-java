@@ -10,9 +10,6 @@ class JavaBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
-		UserController userController = new UserController();
-		ResponseEntity<?> response = userController.testing();
-		System.out.println(response);
 	}
 
 

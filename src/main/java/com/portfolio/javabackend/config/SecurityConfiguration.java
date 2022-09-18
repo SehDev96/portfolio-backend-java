@@ -39,7 +39,7 @@ public class SecurityConfiguration {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/app/login/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/app/finduser**","/app/finduser/**").permitAll();
+        //http.authorizeRequests().antMatchers(HttpMethod.GET, "/app/finduser**","/app/finduser/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/app/user/getinfo").hasAuthority(Role.USER.name());
         http.authenticationManager(authenticationManager);
         http.authorizeRequests().anyRequest().authenticated();
@@ -51,7 +51,7 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().antMatchers("/app/testing","/app/register");
+        return (web) -> web.ignoring().antMatchers("/app/testing","/app/register","/app/finduser**","/app/finderuser/**");
     }
 
     @Bean
