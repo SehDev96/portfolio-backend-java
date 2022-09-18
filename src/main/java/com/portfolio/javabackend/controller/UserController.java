@@ -4,6 +4,7 @@ import com.portfolio.javabackend.model.AppUser;
 import com.portfolio.javabackend.model.AppUserInfo;
 import com.portfolio.javabackend.model.AppUserInfoCombined;
 import com.portfolio.javabackend.model.Role;
+import com.portfolio.javabackend.model.wrapper.AppUserWrapper;
 import com.portfolio.javabackend.service.appuser.AppUserService;
 import com.portfolio.javabackend.service.appuserinfo.AppUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/app")
 @RestController
@@ -39,20 +43,45 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        AppUser appUser = new AppUser(appUserInfoCombined);
-        appUser.setRole(Role.USER);
-        appUser.setCreated_on(LocalDateTime.now());
+        AppUserWrapper appUserWrapper = new AppUserWrapper(appUserInfoCombined);
+        appUserService.saveUser(appUserWrapper.getAppUser());
 
-        AppUserInfo appUserInfo = new AppUserInfo(appUserInfoCombined);
-
-        appUser = appUserService.saveUser(appUser);
-
-        appUserInfo.setUser_id(appUser.getUser_id());
-
-        appUserInfoService.saveAppUserInfo(appUserInfo);
+        appUserWrapper.getAppUserInfo().setUser_id(appUserWrapper.getAppUser().getUser_id());
+        appUserInfoService.saveAppUserInfo(appUserWrapper.getAppUserInfo());
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/finduser")
+    @ResponseBody
+    public ResponseEntity<?> checkUsername(@RequestParam(name = "username") String username, @RequestParam(name = "email") String userEmail) {
+        try {
+            Map<String, Object> responseMap = new HashMap<>();
+            boolean userFound = false;
+            String field = "";
+
+            AppUser appUser = appUserService.findByEmail(userEmail);
+            if(appUser != null){
+                responseMap.put("field","email");
+                responseMap.put("userexists",true);
+                return new ResponseEntity<>(responseMap, HttpStatus.OK);
+            }
+
+            appUser = appUserService.findByUsername(username);
+            if(appUser != null){
+                responseMap.put("field","username");
+                responseMap.put("userexists",true);
+                return new ResponseEntity<>(responseMap, HttpStatus.OK);
+            }
+
+            responseMap.put("userexists", userFound);
+            responseMap.put("field", field);
+            return new ResponseEntity<>(responseMap, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 
     @GetMapping("/user/getinfo")

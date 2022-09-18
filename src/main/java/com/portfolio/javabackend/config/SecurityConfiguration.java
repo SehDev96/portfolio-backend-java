@@ -38,7 +38,7 @@ public class SecurityConfiguration {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/app/login/**").permitAll();
+        http.authorizeRequests().antMatchers("/app/login/**","/app/finduser/**").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/app/user/getinfo").hasAuthority(Role.USER.name());
         http.authenticationManager(authenticationManager);
         http.authorizeRequests().anyRequest().authenticated();
