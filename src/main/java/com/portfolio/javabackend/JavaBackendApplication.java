@@ -21,7 +21,7 @@ public class JavaBackendApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/app/login").allowedOriginPatterns("http://localhost:3000");
+				registry.addMapping("/app/login").allowedOriginPatterns("http://localhost:3000","http://localhost:3000/login");
 				WebMvcConfigurer.super.addCorsMappings(registry);
 			}
 		};

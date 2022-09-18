@@ -37,6 +37,7 @@ public class SecurityConfiguration {
         AuthenticationManager authenticationManager = authenticationManager(http,passwordEncoder(),userDetailsService);
 
         http.csrf().disable();
+        http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/app/login/**").permitAll();
         //http.authorizeRequests().antMatchers(HttpMethod.GET, "/app/finduser**","/app/finduser/**").permitAll();
