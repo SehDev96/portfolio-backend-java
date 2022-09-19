@@ -16,6 +16,9 @@ public interface AppUserRepository extends JpaRepository<AppUser,Long> {
     @Query("select u from AppUser u where u.email= :name or u.username= :name")
     Optional<List<AppUser>> findByEmail(@Param("name") String email);
 
+    @Query("select u from AppUser u where u.user_id= :userId")
+    Optional<AppUser> findByUserId(@Param("userId") Long userId);
+
     @Query("select u.id from AppUser u where u.username= :username")
     Optional<Long> getUserId(@Param("username") String username);
 }

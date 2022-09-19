@@ -90,10 +90,19 @@ public class UserController {
         String username = principal.getName();
         Long userid = appUserService.getUserId(username);
         AppUserInfo appUserInfo = new AppUserInfo();
+        AppUser appUser = new AppUser();
+        AppUserInfoCombined appUserInfoCombined = new AppUserInfoCombined();
         if(userid != null){
             appUserInfo = appUserInfoService.findByUserId(userid);
+            appUser = appUserService.findByUserId(userid);
+            appUserInfoCombined.setCity(appUserInfo.getCity());
+            appUserInfoCombined.setName(appUser.getName());
+            appUserInfoCombined.setEmail(appUser.getEmail());
+            appUserInfoCombined.setPhone_number(appUserInfo.getPhone_number());
+            appUserInfoCombined.setUsername(appUser.getUsername());
+            appUserInfoCombined.setState(appUserInfo.getState());
         }
-        return new ResponseEntity<>(appUserInfo,HttpStatus.OK);
+        return new ResponseEntity<>(appUserInfoCombined,HttpStatus.OK);
     }
 
 }

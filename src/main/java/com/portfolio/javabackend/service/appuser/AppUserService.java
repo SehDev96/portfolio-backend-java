@@ -17,6 +17,8 @@ public interface AppUserService {
 
     AppUser findByEmail(String email);
 
+    AppUser findByUserId(Long userId);
+
     List<AppUser> findAllUsers();
 
     Long numberOfUsers();
