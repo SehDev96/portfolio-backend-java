@@ -2,6 +2,7 @@ package com.portfolio.javabackend.config;
 
 import com.portfolio.javabackend.filter.AppAuthenticationFilter;
 import com.portfolio.javabackend.filter.AppAuthorizationFilter;
+import com.portfolio.javabackend.filter.InHouseCorsFilter;
 import com.portfolio.javabackend.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -45,6 +47,7 @@ public class SecurityConfiguration {
         http.authenticationManager(authenticationManager);
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new AppAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new InHouseCorsFilter(), SessionManagementFilter.class);
         http.addFilter(new AppAuthenticationFilter(authenticationManager));
 
         return http.build();
