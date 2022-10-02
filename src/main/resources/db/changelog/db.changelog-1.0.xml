@@ -30,4 +30,17 @@
             DROP TABLE app_users_info;
         </rollback>
     </changeSet>
+    <changeSet id="3" author="sehran">
+        <sql>
+            CREATE TABLE IF NOT EXISTS app_password_reset (
+            id serial PRIMARY key,
+            user_id int NOT NULL REFERENCES app_users,
+            token VARCHAR ( 255 ),
+            expiration bigint
+            );
+        </sql>
+        <rollback>
+            DROP TABLE app_password_reset;
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

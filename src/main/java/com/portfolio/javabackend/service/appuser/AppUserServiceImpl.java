@@ -1,6 +1,8 @@
 package com.portfolio.javabackend.service.appuser;
 
+import com.portfolio.javabackend.model.AppResetPasswordModel;
 import com.portfolio.javabackend.model.AppUser;
+import com.portfolio.javabackend.repository.AppResetPasswordRepository;
 import com.portfolio.javabackend.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,9 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Autowired
     private AppUserRepository appUserRepository;
+
+    @Autowired
+    private AppResetPasswordRepository appResetPasswordRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -79,5 +84,24 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public Long getUserId(String username) {
         return appUserRepository.getUserId(username).orElse(null);
+    }
+
+    @Override
+    public void savePasswordResetToken(Long user_id, String token) {
+        //fixme two controlers using the same service
+        AppResetPasswordModel appResetPasswordModel = appResetPasswordRepository.findByUserId(user_id).orElse(null);
+        if(appResetPasswordModel != null){
+            appResetPasswordModel.setToken(token);
+            appResetPasswordModel.setExpiration(AppResetPasswordModel.EXPIRATION);
+        } else {
+            appResetPasswordModel = new AppResetPasswordModel(user_id,token);
+        }
+
+        appResetPasswordRepository.save(appResetPasswordModel);
+    }
+
+    @Override
+    public AppResetPasswordModel getAppResetPasswordModelByToken(String token) {
+        return appResetPasswordRepository.findByToken(token).orElse(null);
     }
 }

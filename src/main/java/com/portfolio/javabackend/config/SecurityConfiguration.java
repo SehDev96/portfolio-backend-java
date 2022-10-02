@@ -43,6 +43,10 @@ public class SecurityConfiguration {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/app/login/**").permitAll();
         //http.authorizeRequests().antMatchers(HttpMethod.GET, "/app/finduser**","/app/finduser/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/app/forgotpassword","/app/forgotpassword**",
+                "/app/register","/app/resetpassword").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/app/testing","/app/finduser**",
+                "/app/finderuser/**","/app/resettokenauthentication").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/app/user/getinfo").hasAuthority(Role.USER.name());
         http.authenticationManager(authenticationManager);
         http.authorizeRequests().anyRequest().authenticated();
@@ -53,10 +57,16 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().antMatchers("/app/testing","/app/register","/app/finduser**","/app/finderuser/**");
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer(){
+//        return (web) -> web.ignoring().antMatchers("/app/resetpassword",
+//                "/app/register",
+//                "/app/finduser**",
+//                "/app/finderuser/**",
+//                "/app/forgotpassword",
+//                "/app/forgotpassword**"
+//        );
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder bCryptPasswordEncoder,

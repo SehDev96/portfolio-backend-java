@@ -1,5 +1,6 @@
 package com.portfolio.javabackend.service.appuser;
 
+import com.portfolio.javabackend.model.AppResetPasswordModel;
 import com.portfolio.javabackend.model.AppUser;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface AppUserService {
     Optional<String> getUserFullName(String username);
 
     Long getUserId(String username);
+
+    void savePasswordResetToken(Long user_id, String token);
+
+    AppResetPasswordModel getAppResetPasswordModelByToken(String token);
 }
