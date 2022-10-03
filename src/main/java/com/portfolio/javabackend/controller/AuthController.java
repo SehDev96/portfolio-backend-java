@@ -73,7 +73,6 @@ public class AuthController {
         }
     }
 
-    //@RequestMapping(value = "/resetpassword",method = RequestMethod.GET)
     @PostMapping("/resetpassword")
     public ResponseEntity<?> resetPassword(@RequestBody Map<String,String> params){
 

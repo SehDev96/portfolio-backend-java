@@ -36,8 +36,8 @@ public class UserController {
     public ResponseEntity<?> getInfo(Principal principal){
         String username = principal.getName();
         Long userid = appUserService.getUserId(username);
-        AppUserInfo appUserInfo = new AppUserInfo();
-        AppUser appUser = new AppUser();
+        AppUserInfo appUserInfo;
+        AppUser appUser;
         AppUserInfoCombined appUserInfoCombined = new AppUserInfoCombined();
         if(userid != null){
             appUserInfo = appUserInfoService.findByUserId(userid);
