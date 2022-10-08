@@ -25,9 +25,3 @@ $ cd docker
 $ docker-compose -f dev-docker-compose.yml up -d
 
 ---
-
-### Steps to access postgres container as superuser
-
-$ docker exec -it postgres_dev_container /bin/bash
-
-$ psql --host=database --username=postgres_user --dbname=postgres_database --> password in .env file
